@@ -39,8 +39,10 @@ public class ManagerController {
                 request.getProdDescription(),
                 request.getProdPrice());
 
-        Category category = categoryRepository.findById(request.getProdCategory()).
-                orElseThrow(() -> new ProviderNotFoundException("Category Not Found"));
+        Category category = categoryRepository.findById(request.getProdCategory()).orElse(null);
+        if (category == null) {
+            return (ResponseEntity<?>) ResponseEntity.badRequest();
+        }
         product.setProdCategory(category);
 
         productRepository.save(product);
