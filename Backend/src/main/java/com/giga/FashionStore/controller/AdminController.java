@@ -1,16 +1,16 @@
 package com.giga.FashionStore.controller;
 
-import com.giga.FashionStore.model.Role;
-import com.giga.FashionStore.model.Roles;
-import com.giga.FashionStore.model.StoreManager;
-import com.giga.FashionStore.model.User;
+import com.giga.FashionStore.model.*;
+import com.giga.FashionStore.repository.CategoryRepository;
 import com.giga.FashionStore.repository.RoleRepository;
 import com.giga.FashionStore.repository.UserRepository;
+import com.giga.FashionStore.request.CreateProductCategoryRequest;
 import com.giga.FashionStore.request.SignUpRequest;
 import com.giga.FashionStore.response.MessageResponse;
 import com.giga.FashionStore.service.SequenceGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +30,8 @@ public class AdminController {
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
     @Autowired
     SequenceGenerateService sequenceGenerateService;
     @Autowired
@@ -65,5 +67,24 @@ public class AdminController {
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    // create product category
+    @PostMapping("/createproductcategory")
+    @PostAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> createProductCategory(@Valid @RequestBody CreateProductCategoryRequest request) {
+        if (categoryRepository.existsByCategoryName(request.getCategoryName())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Category is already exists!"));
+        }
+
+        // create new category
+        Category category = new Category(sequenceGenerateService.generateSequence(Category.SEQUENCE_NAME),
+                request.getCategoryName());
+
+        categoryRepository.save(category);
+
+        return ResponseEntity.ok(new MessageResponse("Category added successfully!"));
     }
 }
