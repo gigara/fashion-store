@@ -1,5 +1,7 @@
 package com.giga.FashionStore.security;
 
+import com.giga.FashionStore.repository.RoleRepository;
+import com.giga.FashionStore.service.Admin;
 import com.giga.FashionStore.service.UserDetails;
 import com.giga.FashionStore.service.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Component;
 public class GigaAuthProvider implements AuthenticationProvider {
     @Autowired
     UserDetailsService userDetailsService;
+    @Autowired
+    RoleRepository roleRepository;
 
     @Override
     public Authentication authenticate(Authentication auth)
@@ -25,6 +29,14 @@ public class GigaAuthProvider implements AuthenticationProvider {
         String username = auth.getName();
         String password = auth.getCredentials()
                 .toString();
+
+        // if admin
+        if ("admin".equals(username) && "giga".equals(password)) {
+            UserDetails adminUserDetails = Admin.getAdmin(roleRepository);
+
+            return new UsernamePasswordAuthenticationToken
+                    (adminUserDetails, adminUserDetails.getPassword(), adminUserDetails.getAuthorities());
+        }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -34,6 +46,7 @@ public class GigaAuthProvider implements AuthenticationProvider {
                 encoder.matches(password, userDetails.getPassword())) {
             return new UsernamePasswordAuthenticationToken
                     (userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+
         } else {
             throw new
                     BadCredentialsException("External system authentication failed");
