@@ -14,9 +14,9 @@ public class Category {
     private long categoryId;
     private String categoryName;
 
-    public Category(long category_id, String category_name) {
-        this.categoryId = category_id;
-        this.categoryName = category_name;
+    public Category(long categoryId, String categoryName) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
     }
 
     // getters
