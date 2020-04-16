@@ -10,11 +10,15 @@ import com.giga.FashionStore.response.MessageResponse;
 import com.giga.FashionStore.service.SequenceGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +40,8 @@ public class AdminController {
     SequenceGenerateService sequenceGenerateService;
     @Autowired
     PasswordEncoder encoder;
+    @Autowired
+    private JavaMailSender mailSender;
 
     // add store manager
     @PostMapping("/createmanager")
@@ -63,6 +69,23 @@ public class AdminController {
 
         // add roles to the created user
         user.setRoles(roles);
+
+        // send the email to the store manager
+        MimeMessage msg = mailSender.createMimeMessage();
+
+        MimeMessageHelper helper = null;
+        try {
+            helper = new MimeMessageHelper(msg, true);
+            helper.setTo(user.getEmail());
+            helper.setSubject("Welcome to Fashion Store");
+            helper.setText("<h2>Hi, " + user.getFirstName() + ". You have been successfully added to the Fashion Store as a Store Manager.<h2>\n" +
+                    "<h3>Here are you login details<h3>\n" +
+                    "Email: " + user.getEmail() + "<br>" +
+                    "Password: " + request.getPassword(), true);
+            mailSender.send(msg);
+        } catch (MessagingException e) {
+            return (ResponseEntity<?>) ResponseEntity.badRequest();
+        }
         // save the user into the db
         userRepository.save(user);
 
