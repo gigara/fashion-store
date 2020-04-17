@@ -9,6 +9,7 @@ import com.giga.FashionStore.request.SignUpRequest;
 import com.giga.FashionStore.response.MessageResponse;
 import com.giga.FashionStore.service.SequenceGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -73,7 +74,7 @@ public class AdminController {
         // send the email to the store manager
         MimeMessage msg = mailSender.createMimeMessage();
 
-        MimeMessageHelper helper = null;
+        MimeMessageHelper helper;
         try {
             helper = new MimeMessageHelper(msg, true);
             helper.setTo(user.getEmail());
@@ -84,7 +85,8 @@ public class AdminController {
                     "Password: " + request.getPassword(), true);
             mailSender.send(msg);
         } catch (MessagingException e) {
-            return (ResponseEntity<?>) ResponseEntity.badRequest();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new MessageResponse("Sending email failed!"));
         }
         // save the user into the db
         userRepository.save(user);

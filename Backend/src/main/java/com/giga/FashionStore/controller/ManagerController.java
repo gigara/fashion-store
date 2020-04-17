@@ -10,6 +10,7 @@ import com.giga.FashionStore.request.AddProductRequest;
 import com.giga.FashionStore.response.MessageResponse;
 import com.giga.FashionStore.service.SequenceGenerateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,8 @@ public class ManagerController {
 
         Category category = categoryRepository.findById(request.getProdCategory()).orElse(null);
         if (category == null) {
-            return (ResponseEntity<?>) ResponseEntity.badRequest();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new MessageResponse("Category not found!"));
         }
         product.setProdCategory(category);
 
@@ -57,7 +59,8 @@ public class ManagerController {
     public ResponseEntity<?> addDiscount(@Valid @RequestBody AddDiscountRequest request) {
         Product product = productRepository.findById(request.getProductId()).orElse(null);
         if (product == null) {
-            return (ResponseEntity<?>) ResponseEntity.badRequest();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new MessageResponse("Product not found!"));
         }
 
         Discount discount = new Discount(request.getDiscountName(), request.getDiscountValue());

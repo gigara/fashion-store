@@ -8,6 +8,7 @@ import com.giga.FashionStore.request.AddToWishListRequest;
 import com.giga.FashionStore.response.MessageResponse;
 import com.giga.FashionStore.service.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,12 +43,14 @@ public class UserController {
         SiteUser siteUser = (SiteUser) userRepository.findById(request.getUser_Id()).orElse(null);
 
         if (siteUser == null || !username.equals(siteUser.getUsername())) {
-            return (ResponseEntity<?>) ResponseEntity.badRequest();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new MessageResponse("User not found!"));
         }
 
         Product product = productRepository.findById(request.getProd_Id()).orElse(null);
         if (product == null) {
-            return (ResponseEntity<?>) ResponseEntity.badRequest();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new MessageResponse("Product not found!"));
         }
 
         Set<Product> products = new HashSet<>(siteUser.getWishList());
