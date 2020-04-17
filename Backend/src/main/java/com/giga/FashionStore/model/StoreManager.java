@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "User")
 @TypeAlias("StoreManager")
 public class StoreManager extends User {
-    public StoreManager(long userID, String firstName, String lastName, String username, String email, String password) {
+    public StoreManager(String userID, String firstName, String lastName, String username, String email, String password) {
         super(userID, firstName, lastName, username, email, password);
     }
 }

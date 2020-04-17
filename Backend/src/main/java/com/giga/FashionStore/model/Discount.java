@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "discounts")
 public class Discount {
     @Id
-    private long discountId;
+    private String discountId;
     private String discountName;
     private int discountValue;
 
@@ -19,7 +19,7 @@ public class Discount {
     }
 
     // getters
-    public long getDiscountId() {
+    public String getDiscountId() {
         return discountId;
     }
 
@@ -32,7 +32,7 @@ public class Discount {
     }
 
     // setters
-    public void setDiscountId(long discountId) {
+    public void setDiscountId(String discountId) {
         this.discountId = discountId;
     }
 

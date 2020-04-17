@@ -28,7 +28,7 @@ public class Admin {
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName().name()))
                 .collect(Collectors.toList());
 
-        userDetails = new UserDetails(-1,
+        userDetails = new UserDetails(String.valueOf(-1),
                 "admin@gigara.info", "giga", authorities);
     }
 

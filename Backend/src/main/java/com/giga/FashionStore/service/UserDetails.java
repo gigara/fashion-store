@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
     private static final long serialVersionUID = 1L;
 
-    private long id;
+    private String id;
 
     private String email;
 
@@ -24,8 +24,8 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetails(long id, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+    public UserDetails(String id, String email, String password,
+                       Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -49,7 +49,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
         return authorities;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 

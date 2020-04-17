@@ -14,7 +14,7 @@ public class Product {
     public static final String SEQUENCE_NAME = "product_sequence";
 
     @Id
-    private long prod_id;
+    private String prod_id;
     private String prodName;
     private String prodDescription;
     private String prodPrice;
@@ -27,7 +27,7 @@ public class Product {
     @DBRef
     private List<Rating> prodRatings;
 
-    public Product(long prod_id, String prodName, String prodDescription, String prodPrice) {
+    public Product(String prod_id, String prodName, String prodDescription, String prodPrice) {
         this.prod_id = prod_id;
         this.prodName = prodName;
         this.prodDescription = prodDescription;
@@ -35,7 +35,7 @@ public class Product {
     }
 
     // getters
-    public long getProd_id() {
+    public String getProd_id() {
         return prod_id;
     }
 
@@ -68,7 +68,7 @@ public class Product {
     }
 
     // setters
-    public void setProd_id(long prod_id) {
+    public void setProd_id(String prod_id) {
         this.prod_id = prod_id;
     }
 

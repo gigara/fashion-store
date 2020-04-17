@@ -11,16 +11,16 @@ public class Category {
     public static final String SEQUENCE_NAME = "category_sequence";
 
     @Id
-    private long categoryId;
+    private String categoryId;
     private String categoryName;
 
-    public Category(long categoryId, String categoryName) {
+    public Category(String categoryId, String categoryName) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
     }
 
     // getters
-    public long getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
@@ -29,7 +29,7 @@ public class Category {
     }
 
     // setters
-    public void setCategoryId(long categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 

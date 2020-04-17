@@ -11,7 +11,7 @@ import java.util.Date;
 @Document(collection = "comments")
 public class Comment {
     @Id
-    private long comment_id;
+    private String comment_id;
     private String comment_msg;
     private Date comment_timestamp;
     private User comment_user;
@@ -23,7 +23,7 @@ public class Comment {
     }
 
     // getters
-    public long getComment_id() {
+    public String getComment_id() {
         return comment_id;
     }
 
@@ -40,7 +40,7 @@ public class Comment {
     }
 
     // setters
-    public void setComment_id(long comment_id) {
+    public void setComment_id(String comment_id) {
         this.comment_id = comment_id;
     }
 

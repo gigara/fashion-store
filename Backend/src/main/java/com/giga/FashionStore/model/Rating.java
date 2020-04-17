@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "ratings")
 public class Rating {
     @Id
-    private long rating_id;
+    private String rating_id;
     private double rating_rate;
     private User user;
 
@@ -19,7 +19,7 @@ public class Rating {
     }
 
     // getters
-    public long getRating_id() {
+    public String getRating_id() {
         return rating_id;
     }
 
@@ -32,7 +32,7 @@ public class Rating {
     }
 
     // setters
-    public void setRating_id(long rating_id) {
+    public void setRating_id(String rating_id) {
         this.rating_id = rating_id;
     }
 

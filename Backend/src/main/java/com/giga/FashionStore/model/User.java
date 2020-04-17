@@ -18,7 +18,7 @@ public abstract class User {
     public static final String SEQUENCE_NAME = "users_sequence";
 
     @Id
-    private long userID;
+    private String userID;
     private String firstName;
     private String lastName;
     @Indexed(unique = true)
@@ -29,7 +29,7 @@ public abstract class User {
     private Set<Role> roles = new HashSet<>();
 
     // constructor
-    public User(long userID, String firstName, String lastName, String username, String email, String password) {
+    public User(String userID, String firstName, String lastName, String username, String email, String password) {
         this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,7 +39,7 @@ public abstract class User {
     }
 
     // getters
-    public long getUserID() {
+    public String getUserID() {
         return userID;
     }
 
@@ -68,7 +68,7 @@ public abstract class User {
     }
 
     // setters
-    public void setUserID(long userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
