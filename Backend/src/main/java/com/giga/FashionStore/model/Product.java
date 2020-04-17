@@ -99,4 +99,26 @@ public class Product {
     public void setProdRatings(List<Rating> prodRatings) {
         this.prodRatings = prodRatings;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((prod_id == null) ? 0 : prod_id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Product other = (Product) obj;
+        if (prod_id == null) {
+            return other.prod_id == null;
+        } else return prod_id.equals(other.prod_id);
+    }
 }
