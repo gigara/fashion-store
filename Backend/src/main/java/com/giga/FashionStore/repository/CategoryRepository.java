@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.Query;
 /**
  * Category repository communicate with the DB
  */
-public interface CategoryRepository extends MongoRepository<Category, Long> {
+public interface CategoryRepository extends MongoRepository<Category, String> {
     @Query(value = "{categoryName : ?0}", exists = true)
     Boolean existsByCategoryName(String categoryName);
 }

@@ -19,7 +19,7 @@ public class AddProductRequest {
     @Size(min = 3, max = 10)
     private String prodPrice;
 
-    private long prodCategory;
+    private String prodCategory;
 
     // getters
     public String getProdName() {
@@ -34,7 +34,7 @@ public class AddProductRequest {
         return prodPrice;
     }
 
-    public long getProdCategory() {
+    public String getProdCategory() {
         return prodCategory;
     }
 
@@ -51,7 +51,7 @@ public class AddProductRequest {
         this.prodPrice = prodPrice;
     }
 
-    public void setProdCategory(long prodCategory) {
+    public void setProdCategory(String prodCategory) {
         this.prodCategory = prodCategory;
     }
 }

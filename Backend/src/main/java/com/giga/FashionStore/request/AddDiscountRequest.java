@@ -8,7 +8,7 @@ import javax.validation.constraints.*;
 public class AddDiscountRequest {
     @NotNull
     @Min(0)
-    private long productId;
+    private String productId;
 
     @NotBlank
     @Size(min = 3, max = 30)
@@ -19,7 +19,7 @@ public class AddDiscountRequest {
     @Max(99)
     private int discountValue;
 
-    public long getProductId() {
+    public String getProductId() {
         return productId;
     }
 
@@ -32,7 +32,7 @@ public class AddDiscountRequest {
         return discountValue;
     }
 
-    public void setProductId(long productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
