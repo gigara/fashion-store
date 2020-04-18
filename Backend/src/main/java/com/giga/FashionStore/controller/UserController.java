@@ -107,9 +107,19 @@ public class UserController {
         if (request.getRating() > 0) {
             Rating rating = new Rating(sequenceGenerateService.generateSequence(Rating.SEQUENCE_NAME),
                     request.getRating(), siteUser);
-            ratingRepository.save(rating);
+            Rating previousRate = ratingRepository.findByUser(siteUser).orElse(null);
+            if (previousRate != null) {
+                previousRate.setRating_rate(rating.getRating_rate());
+                previousRate.setUser(siteUser);
+                ratingRepository.save(previousRate);
+            } else {
+                ratingRepository.save(rating);
+            }
+
             List<Rating> ratings = new ArrayList<>(product.getProdRatings());
-            ratings.add(rating);
+            if (previousRate == null) {
+                ratings.add(rating);
+            }
             product.setProdRatings(ratings);
         }
         productRepository.save(product);
