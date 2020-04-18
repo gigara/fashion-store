@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public class Product {
     @DBRef
     private Discount prodDiscount;
     @DBRef
-    private List<Comment> prodComments;
+    private List<Comment> prodComments = new ArrayList<>();
     @DBRef
     private List<Rating> prodRatings;
 

@@ -1,6 +1,8 @@
 package com.giga.FashionStore.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -10,13 +12,17 @@ import java.util.Date;
  */
 @Document(collection = "comments")
 public class Comment {
+    @Transient
+    public static final String SEQUENCE_NAME = "comments_sequence";
     @Id
     private String comment_id;
     private String comment_msg;
     private Date comment_timestamp;
+    @DBRef
     private User comment_user;
 
-    public Comment(String comment_msg, Date comment_timestamp, User comment_user) {
+    public Comment(String comment_id, String comment_msg, Date comment_timestamp, User comment_user) {
+        this.comment_id = comment_id;
         this.comment_msg = comment_msg;
         this.comment_timestamp = comment_timestamp;
         this.comment_user = comment_user;
