@@ -1,5 +1,6 @@
 package com.giga.FashionStore.request;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -16,7 +17,9 @@ public class AddCommentRequest {
     private String prod_Id;
     @Size(min = 3, max = 100)
     private String comment;
-
+    @Min(0)
+    @Max(5)
+    private double rating;
 
     // getters & setters
     public String getUser_Id() {
@@ -41,5 +44,13 @@ public class AddCommentRequest {
 
     public void setProd_Id(String prod_Id) {
         this.prod_Id = prod_Id;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }

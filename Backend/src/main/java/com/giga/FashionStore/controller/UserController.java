@@ -2,9 +2,11 @@ package com.giga.FashionStore.controller;
 
 import com.giga.FashionStore.model.Comment;
 import com.giga.FashionStore.model.Product;
+import com.giga.FashionStore.model.Rating;
 import com.giga.FashionStore.model.SiteUser;
 import com.giga.FashionStore.repository.CommentRepository;
 import com.giga.FashionStore.repository.ProductRepository;
+import com.giga.FashionStore.repository.RatingRepository;
 import com.giga.FashionStore.repository.UserRepository;
 import com.giga.FashionStore.request.AddCommentRequest;
 import com.giga.FashionStore.request.AddToWishListRequest;
@@ -34,6 +36,8 @@ public class UserController {
     ProductRepository productRepository;
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    RatingRepository ratingRepository;
     @Autowired
     SequenceGenerateService sequenceGenerateService;
 
@@ -91,13 +95,23 @@ public class UserController {
                     body(new MessageResponse("Product not found!"));
         }
 
-        Comment comment = new Comment(sequenceGenerateService.generateSequence(Comment.SEQUENCE_NAME),
-                request.getComment(), new Date(), siteUser);
-        commentRepository.save(comment);
+        if (request.getComment() != null) {
+            Comment comment = new Comment(sequenceGenerateService.generateSequence(Comment.SEQUENCE_NAME),
+                    request.getComment(), new Date(), siteUser);
+            commentRepository.save(comment);
 
-        List<Comment> comments = new ArrayList<>(product.getProdComments());
-        comments.add(comment);
-        product.setProdComments(comments);
+            List<Comment> comments = new ArrayList<>(product.getProdComments());
+            comments.add(comment);
+            product.setProdComments(comments);
+        }
+        if (request.getRating() > 0) {
+            Rating rating = new Rating(sequenceGenerateService.generateSequence(Rating.SEQUENCE_NAME),
+                    request.getRating(), siteUser);
+            ratingRepository.save(rating);
+            List<Rating> ratings = new ArrayList<>(product.getProdRatings());
+            ratings.add(rating);
+            product.setProdRatings(ratings);
+        }
         productRepository.save(product);
 
         return ResponseEntity.ok(new MessageResponse("Comment has been successfully added"));

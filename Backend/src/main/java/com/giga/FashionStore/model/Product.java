@@ -26,7 +26,7 @@ public class Product {
     @DBRef
     private List<Comment> prodComments = new ArrayList<>();
     @DBRef
-    private List<Rating> prodRatings;
+    private List<Rating> prodRatings = new ArrayList<>();
 
     public Product(String prod_id, String prodName, String prodDescription, String prodPrice) {
         this.prod_id = prod_id;
