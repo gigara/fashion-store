@@ -18,7 +18,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -77,6 +76,7 @@ public class AdminController {
         MimeMessageHelper helper;
         try {
             helper = new MimeMessageHelper(msg, true);
+            helper.setFrom("no-reply@gigara.info");
             helper.setTo(user.getEmail());
             helper.setSubject("Welcome to Fashion Store");
             helper.setText("<h2>Hi, " + user.getFirstName() + ". You have been successfully added to the Fashion Store as a Store Manager.<h2>\n" +
@@ -84,7 +84,7 @@ public class AdminController {
                     "Email: " + user.getEmail() + "<br>" +
                     "Password: " + request.getPassword(), true);
             mailSender.send(msg);
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                     body(new MessageResponse("Sending email failed!"));
         }
