@@ -1,8 +1,6 @@
 package com.giga.FashionStore.model;
 
-import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,8 +8,6 @@ import java.util.Set;
 /**
  * Site user class that extends the abstract user class.
  */
-@Document(collection = "User")
-@TypeAlias("SiteUser")
 public class SiteUser extends User {
     @DBRef
     private Set<Product> wishList = new HashSet<>();

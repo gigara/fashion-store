@@ -1,5 +1,6 @@
 package com.giga.FashionStore.controller;
 
+import com.giga.FashionStore.model.Comment;
 import com.giga.FashionStore.model.Product;
 import com.giga.FashionStore.model.Rating;
 import com.giga.FashionStore.repository.ProductRepository;
@@ -59,6 +60,16 @@ public class OpenController {
                 avg += prodRating.getRating_rate();
             }
             avg /= ratings.size();
+        }
+
+        for (Comment prodComment : product.getProdComments()) {
+            if (prodComment.getComment_user() != null) {
+                prodComment.getComment_user().setUserID(null);
+                prodComment.getComment_user().setPassword(null);
+                prodComment.getComment_user().setRoles(null);
+                prodComment.getComment_user().setUsername(null);
+                prodComment.getComment_user().setWishList(null);
+            }
         }
         ProductResponse productResponse = new ProductResponse(product.getProd_id(),
                 product.getProdName(),
