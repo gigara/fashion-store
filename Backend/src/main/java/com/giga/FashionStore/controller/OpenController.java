@@ -76,7 +76,8 @@ public class OpenController {
                 product.getProdDescription(),
                 product.getProdPrice(),
                 product.getProdComments(),
-                avg);
+                avg,
+                product.getProdDiscount());
 
         productResponse.setAverageRating(avg);
         return ResponseEntity.ok(productResponse);

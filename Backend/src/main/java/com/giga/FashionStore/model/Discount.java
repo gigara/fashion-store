@@ -8,12 +8,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection = "discounts")
 public class Discount {
+    public static final String SEQUENCE_NAME = "discount_sequence";
+
     @Id
     private String discountId;
     private String discountName;
     private int discountValue;
 
-    public Discount(String discountName, int discountValue) {
+    public Discount(String discountId, String discountName, int discountValue) {
+        this.discountId = discountId;
         this.discountName = discountName;
         this.discountValue = discountValue;
     }

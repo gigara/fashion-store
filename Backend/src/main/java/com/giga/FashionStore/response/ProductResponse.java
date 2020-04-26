@@ -1,6 +1,7 @@
 package com.giga.FashionStore.response;
 
 import com.giga.FashionStore.model.Comment;
+import com.giga.FashionStore.model.Discount;
 
 import java.util.List;
 
@@ -14,14 +15,16 @@ public class ProductResponse {
     private String prodPrice;
     private List<Comment> prodComments;
     private double averageRating;
+    private Discount prodDiscount;
 
-    public ProductResponse(String prod_id, String prodName, String prodDescription, String prodPrice, List<Comment> prodComments, double averageRating) {
+    public ProductResponse(String prod_id, String prodName, String prodDescription, String prodPrice, List<Comment> prodComments, double averageRating, Discount prodDiscount) {
         this.prod_id = prod_id;
         this.prodName = prodName;
         this.prodDescription = prodDescription;
         this.prodPrice = prodPrice;
         this.prodComments = prodComments;
         this.averageRating = averageRating;
+        this.prodDiscount = prodDiscount;
     }
 
     // getters & setters
@@ -71,5 +74,13 @@ public class ProductResponse {
 
     public void setProdComments(List<Comment> prodComments) {
         this.prodComments = prodComments;
+    }
+
+    public Discount getProdDiscount() {
+        return prodDiscount;
+    }
+
+    public void setProdDiscount(Discount prodDiscount) {
+        this.prodDiscount = prodDiscount;
     }
 }

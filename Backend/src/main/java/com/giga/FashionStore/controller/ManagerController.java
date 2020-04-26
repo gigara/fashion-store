@@ -4,6 +4,7 @@ import com.giga.FashionStore.model.Category;
 import com.giga.FashionStore.model.Discount;
 import com.giga.FashionStore.model.Product;
 import com.giga.FashionStore.repository.CategoryRepository;
+import com.giga.FashionStore.repository.DiscountRepository;
 import com.giga.FashionStore.repository.ProductRepository;
 import com.giga.FashionStore.request.AddDiscountRequest;
 import com.giga.FashionStore.request.AddProductRequest;
@@ -28,6 +29,8 @@ public class ManagerController {
     ProductRepository productRepository;
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    DiscountRepository discountRepository;
     @Autowired
     SequenceGenerateService sequenceGenerateService;
 
@@ -63,7 +66,9 @@ public class ManagerController {
                     body(new MessageResponse("Product not found!"));
         }
 
-        Discount discount = new Discount(request.getDiscountName(), request.getDiscountValue());
+        Discount discount = new Discount(sequenceGenerateService.generateSequence(Discount.SEQUENCE_NAME),
+                request.getDiscountName(), request.getDiscountValue());
+        discountRepository.save(discount);
         product.setProdDiscount(discount);
 
         productRepository.save(product);
