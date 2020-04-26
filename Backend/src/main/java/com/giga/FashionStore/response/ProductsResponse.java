@@ -8,6 +8,13 @@ public class ProductsResponse {
     private String prodPrice;
     private Category prodCategory;
 
+    public ProductsResponse(long _id, String prodName, String prodPrice, Category prodCategory) {
+        this._id = _id;
+        this.prodName = prodName;
+        this.prodPrice = prodPrice;
+        this.prodCategory = prodCategory;
+    }
+
     // getters
     public long get_id() {
         return _id;

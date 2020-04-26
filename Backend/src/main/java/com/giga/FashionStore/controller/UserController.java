@@ -7,6 +7,7 @@ import com.giga.FashionStore.request.AddToWishListRequest;
 import com.giga.FashionStore.request.OrderProductRequest;
 import com.giga.FashionStore.request.PlaceOrderRequest;
 import com.giga.FashionStore.response.MessageResponse;
+import com.giga.FashionStore.response.ProductsResponse;
 import com.giga.FashionStore.service.SequenceGenerateService;
 import com.giga.FashionStore.service.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -164,5 +165,34 @@ public class UserController {
         orderRepository.save(order);
 
         return ResponseEntity.ok(new MessageResponse("Order has been successfully placed"));
+    }
+
+    /**
+     * user wish list method
+     * @return User wishlist
+     */
+    @GetMapping("/getwishlist")
+    @PostAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> getWishList(@Valid @RequestParam(value = "userID") String user_Id) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        SiteUser siteUser = (SiteUser) userRepository.findById(user_Id).orElse(null);
+
+        if (siteUser == null || !username.equals(siteUser.getUsername())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new MessageResponse("User not found!"));
+        }
+        List<ProductsResponse> products = new ArrayList<>();
+
+        for (Product product : siteUser.getWishList()) {
+            products.add(new ProductsResponse(Long.parseLong(product.getProd_id()),
+                    product.getProdName(), product.getProdPrice(), product.getProdCategory()));
+        }
+        return ResponseEntity.ok(products);
     }
 }
