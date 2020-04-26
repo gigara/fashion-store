@@ -1,15 +1,11 @@
 package com.giga.FashionStore.controller;
 
-import com.giga.FashionStore.model.Comment;
-import com.giga.FashionStore.model.Product;
-import com.giga.FashionStore.model.Rating;
-import com.giga.FashionStore.model.SiteUser;
-import com.giga.FashionStore.repository.CommentRepository;
-import com.giga.FashionStore.repository.ProductRepository;
-import com.giga.FashionStore.repository.RatingRepository;
-import com.giga.FashionStore.repository.UserRepository;
+import com.giga.FashionStore.model.*;
+import com.giga.FashionStore.repository.*;
 import com.giga.FashionStore.request.AddCommentRequest;
 import com.giga.FashionStore.request.AddToWishListRequest;
+import com.giga.FashionStore.request.OrderProductRequest;
+import com.giga.FashionStore.request.PlaceOrderRequest;
 import com.giga.FashionStore.response.MessageResponse;
 import com.giga.FashionStore.service.SequenceGenerateService;
 import com.giga.FashionStore.service.UserDetails;
@@ -38,6 +34,10 @@ public class UserController {
     CommentRepository commentRepository;
     @Autowired
     RatingRepository ratingRepository;
+    @Autowired
+    OrderRepository orderRepository;
+    @Autowired
+    OrderProductRepository orderProductRepository;
     @Autowired
     SequenceGenerateService sequenceGenerateService;
 
@@ -125,5 +125,44 @@ public class UserController {
         productRepository.save(product);
 
         return ResponseEntity.ok(new MessageResponse("Comment has been successfully added"));
+    }
+
+    @PostMapping("placeorder")
+    @PostAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> placeOrder(@Valid @RequestBody PlaceOrderRequest request) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        SiteUser siteUser = (SiteUser) userRepository.findById(request.getUser_Id()).orElse(null);
+
+        if (siteUser == null || !username.equals(siteUser.getUsername())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new MessageResponse("User not found!"));
+        }
+
+        List<OrderProduct> products = new ArrayList<>();
+        for (OrderProductRequest requestProduct : request.getProducts()) {
+            Product product = productRepository.findById(requestProduct.getProd_Id()).orElse(null);
+            if (product != null) {
+                OrderProduct orderProduct = new OrderProduct(sequenceGenerateService.generateSequence(OrderProduct.SEQUENCE_NAME),
+                        product.getProd_id(), requestProduct.getQuantity());
+                orderProductRepository.save(orderProduct);
+                products.add(orderProduct);
+            }
+        }
+        if (products.size() == 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(new MessageResponse("Products not found!"));
+        }
+
+        Order order = new Order(sequenceGenerateService.generateSequence(Order.SEQUENCE_NAME), siteUser,
+                products, request.getPaymentRefID(), request.getDeliveryMethod(), request.getAddress(), new Date());
+        orderRepository.save(order);
+
+        return ResponseEntity.ok(new MessageResponse("Order has been successfully placed"));
     }
 }
