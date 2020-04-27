@@ -14,6 +14,7 @@ public class ProductResponse {
     private String prodDescription;
     private String prodPrice;
     private List<Comment> prodComments;
+    private double prodRating;
     private double averageRating;
     private Discount prodDiscount;
 
@@ -82,5 +83,13 @@ public class ProductResponse {
 
     public void setProdDiscount(Discount prodDiscount) {
         this.prodDiscount = prodDiscount;
+    }
+
+    public double getProdRating() {
+        return prodRating;
+    }
+
+    public void setProdRating(double prodRating) {
+        this.prodRating = prodRating;
     }
 }
