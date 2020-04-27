@@ -9,11 +9,12 @@ public class ProductsResponse {
     private Category prodCategory;
     private String prodImage;
 
-    public ProductsResponse(long _id, String prodName, String prodPrice, Category prodCategory) {
+    public ProductsResponse(long _id, String prodName, String prodPrice, Category prodCategory, String prodImage) {
         this._id = _id;
         this.prodName = prodName;
         this.prodPrice = prodPrice;
         this.prodCategory = prodCategory;
+        this.prodImage = prodImage;
     }
 
     // getters

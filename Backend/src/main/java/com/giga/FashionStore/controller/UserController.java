@@ -194,15 +194,10 @@ public class UserController {
 
         for (Product product : siteUser.getWishList()) {
             ProductsResponse productResponse = new ProductsResponse(Long.parseLong(product.getProd_id()),
-                    product.getProdName(), product.getProdPrice(), product.getProdCategory());
+                    product.getProdName(), product.getProdPrice(), product.getProdCategory(),
+                    product.getProdImage() == null ? IMAGE : product.getProdImage());
             products.add(productResponse);
 
-            // set image
-            if (product.getProdImage() == null) {
-                productResponse.setProdImage(IMAGE);
-            } else {
-                productResponse.setProdImage(product.getProdImage());
-            }
         }
         return ResponseEntity.ok(products);
     }

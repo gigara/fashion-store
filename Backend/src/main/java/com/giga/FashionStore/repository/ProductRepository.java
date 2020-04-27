@@ -12,6 +12,6 @@ import java.util.List;
  * Product repository to communicate with the DB
  */
 public interface ProductRepository extends MongoRepository<Product, String> {
-    @Query(value = "{}", fields = "{_id : 1, prodName : 1, prodPrice: 1, prodCategory: 1}")
+    @Query(value = "{}", fields = "{_id : 1, prodName : 1, prodPrice: 1, prodCategory: 1, prodImage: 1}")
     List<ProductsResponse> getProducts(Pageable pageable);
 }
