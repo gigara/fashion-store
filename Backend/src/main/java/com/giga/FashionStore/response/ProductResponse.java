@@ -17,6 +17,7 @@ public class ProductResponse {
     private double prodRating;
     private double averageRating;
     private Discount prodDiscount;
+    private String prodImage;
 
     public ProductResponse(String prod_id, String prodName, String prodDescription, String prodPrice, List<Comment> prodComments, double averageRating, Discount prodDiscount) {
         this.prod_id = prod_id;
@@ -91,5 +92,13 @@ public class ProductResponse {
 
     public void setProdRating(double prodRating) {
         this.prodRating = prodRating;
+    }
+
+    public String getProdImage() {
+        return prodImage;
+    }
+
+    public void setProdImage(String prodImage) {
+        this.prodImage = prodImage;
     }
 }

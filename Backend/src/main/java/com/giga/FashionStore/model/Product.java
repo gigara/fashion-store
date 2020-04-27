@@ -19,6 +19,7 @@ public class Product {
     private String prodName;
     private String prodDescription;
     private String prodPrice;
+    private String prodImage;
     @DBRef
     private Category prodCategory;
     @DBRef
@@ -68,6 +69,10 @@ public class Product {
         return prodRatings;
     }
 
+    public String getProdImage() {
+        return prodImage;
+    }
+
     // setters
     public void setProd_id(String prod_id) {
         this.prod_id = prod_id;
@@ -99,6 +104,10 @@ public class Product {
 
     public void setProdRatings(List<Rating> prodRatings) {
         this.prodRatings = prodRatings;
+    }
+
+    public void setProdImage(String prodImage) {
+        this.prodImage = prodImage;
     }
 
     @Override

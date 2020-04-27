@@ -21,6 +21,8 @@ public class AddProductRequest {
 
     private String prodCategory;
 
+    private String prodImage;
+
     // getters
     public String getProdName() {
         return prodName;
@@ -38,6 +40,10 @@ public class AddProductRequest {
         return prodCategory;
     }
 
+    public String getProdImage() {
+        return prodImage;
+    }
+
     // setters
     public void setProdName(String prodName) {
         this.prodName = prodName;
@@ -53,5 +59,9 @@ public class AddProductRequest {
 
     public void setProdCategory(String prodCategory) {
         this.prodCategory = prodCategory;
+    }
+
+    public void setProdImage(String prodImage) {
+        this.prodImage = prodImage;
     }
 }

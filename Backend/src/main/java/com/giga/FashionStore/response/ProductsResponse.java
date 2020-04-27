@@ -7,6 +7,7 @@ public class ProductsResponse {
     private String prodName;
     private String prodPrice;
     private Category prodCategory;
+    private String prodImage;
 
     public ProductsResponse(long _id, String prodName, String prodPrice, Category prodCategory) {
         this._id = _id;
@@ -32,6 +33,10 @@ public class ProductsResponse {
         return prodCategory;
     }
 
+    public String getProdImage() {
+        return prodImage;
+    }
+
     // setters
     public void set_id(long _id) {
         this._id = _id;
@@ -47,5 +52,9 @@ public class ProductsResponse {
 
     public void setProdCategory(Category prodCategory) {
         this.prodCategory = prodCategory;
+    }
+
+    public void setProdImage(String prodImage) {
+        this.prodImage = prodImage;
     }
 }
