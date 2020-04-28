@@ -107,9 +107,9 @@ class ProductList extends Component {
         <ProductsHeader
           parsedQS={parsedQS}
           updateQueryString={this.updateQueryString}
-          totalItemsCount={this.state.totalItemsCount} />
+          totalItemsCount={this.state.items.length} />
 
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1, margin: "auto" }}>
           {/*Items in the product list.*/}
           {this.state.items.map(item => {
             return <Item key={item._id} item={item} />;

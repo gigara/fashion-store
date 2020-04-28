@@ -33,7 +33,7 @@ class ConnectedItem extends Component {
             this.props.history.push({pathname: "/details/" + this.props.item._id,state: { id: this.props.item._id}});
           }}
         >
-          
+          <img src={this.props.item.prodImage} style={{ maxHeight: 130, display: "block", margin: "auto"}}></img>
           <CardContent style={{ height: 50 }}>
             <div
               style={{
@@ -44,6 +44,7 @@ class ConnectedItem extends Component {
                 textOverflow: "ellipsis"
               }}
             >
+	      	
               {this.props.item.prodName}
             </div>
             <div style={{ margin: 5 }}>Price: {this.props.item.prodPrice} $</div>

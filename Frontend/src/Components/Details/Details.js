@@ -208,7 +208,7 @@ class ConnectedDetails extends Component {
     }
 
     return (
-      <div style={{ padding: 10,}}>
+      <div style={{ padding: 10, width: "fit-content", margin: "auto"}}>
         <div
           style={{
             marginBottom: 20,
