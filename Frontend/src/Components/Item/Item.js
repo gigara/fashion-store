@@ -24,7 +24,7 @@ class ConnectedItem extends Component {
   render() {
     return (
       <Card
-        style={{ width: 200, height: 270, margin: 10, display: "inline-block" }}
+        style={{ width: 200, height: 270, margin: 10}}
       >
         <CardActionArea
           onClick={() => {
@@ -44,7 +44,7 @@ class ConnectedItem extends Component {
                 textOverflow: "ellipsis"
               }}
             >
-	      	
+
               {this.props.item.prodName}
             </div>
             <div style={{ margin: 5 }}>Price: {this.props.item.prodPrice} $</div>
@@ -69,6 +69,7 @@ class ConnectedItem extends Component {
           </Button>
           <Tooltip title="Add to cart">
             <IconButton
+              style={{display: 'none'}}
               size="small"
               onClick={e => {
                 e.stopPropagation();
