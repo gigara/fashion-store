@@ -149,7 +149,7 @@ public class UserController {
 
         List<OrderProduct> products = new ArrayList<>();
         for (OrderProductRequest requestProduct : request.getProducts()) {
-            Product product = productRepository.findById(requestProduct.getProd_Id()).orElse(null);
+            Product product = productRepository.findById(requestProduct.getProd_id()).orElse(null);
             if (product != null) {
                 OrderProduct orderProduct = new OrderProduct(sequenceGenerateService.generateSequence(OrderProduct.SEQUENCE_NAME),
                         product.getProd_id(), requestProduct.getQuantity());

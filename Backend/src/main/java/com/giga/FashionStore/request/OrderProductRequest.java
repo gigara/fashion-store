@@ -1,15 +1,15 @@
 package com.giga.FashionStore.request;
 
 public class OrderProductRequest {
-    private String prod_Id;
+    private String prod_id;
     private int quantity;
 
-    public String getProd_Id() {
-        return prod_Id;
+    public String getProd_id() {
+        return prod_id;
     }
 
-    public void setProd_Id(String prod_Id) {
-        this.prod_Id = prod_Id;
+    public void setProd_id(String prod_id) {
+        this.prod_id = prod_id;
     }
 
     public int getQuantity() {
